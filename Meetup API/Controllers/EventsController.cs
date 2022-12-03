@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Meetup_API.EventData;
-using Meetup_API.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Meetup_EF.Models;
+using Meetup_API.EventData.Interfaces;
 
 namespace Meetup_API.Controllers
 {
@@ -13,12 +12,14 @@ namespace Meetup_API.Controllers
         {
             _eventData = evenData;
         }
+
         [HttpGet]
         [Route("api/[controller]")]
-        public IActionResult GetEvent()
+        public IActionResult GetAllEvents()
         {
-            return Ok(_eventData.GetEvents());
+            return Ok(_eventData.GetAllEvents());
         }
+
         [HttpGet]
         [Route("api/[controller]/{id}")]
         public IActionResult GetEvent(Guid id)

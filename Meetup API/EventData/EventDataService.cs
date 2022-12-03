@@ -1,17 +1,19 @@
-﻿using Meetup_API.Models;
+﻿using Meetup_API.EventData.Interfaces;
+using Meetup_EF.Models;
 
 namespace Meetup_API.EventData
 {
-    public class SqlEventData : IEventData
+    public class EventDataService : IEventData
     {
         private EventContext _eventContext;
-        public SqlEventData(EventContext eventContext)
+        public EventDataService(EventContext eventContext)
         {
             _eventContext = eventContext;
         }
         public Event AddEvent(Event @event)
         {
             @event.Id = Guid.NewGuid();
+            @event.Number = _eventContext.Events.Count() + 1;
             _eventContext.Events.Add(@event);
             _eventContext.SaveChanges();
             return @event;
@@ -46,7 +48,7 @@ namespace Meetup_API.EventData
             return @event;
         }
 
-        public List<Event> GetEvents()
+        public List<Event> GetAllEvents()
         {
             return _eventContext.Events.ToList();
         }

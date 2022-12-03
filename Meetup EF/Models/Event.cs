@@ -1,12 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
 
-namespace Meetup_API.Models
+namespace Meetup_EF.Models
 {
     public class Event
     {
 
         [Key]
         public Guid Id { get; set; }
+        public int Number { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]

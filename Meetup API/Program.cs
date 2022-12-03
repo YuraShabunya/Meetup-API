@@ -1,5 +1,6 @@
 using Meetup_API.EventData;
-using Meetup_API.Models;
+using Meetup_API.EventData.Interfaces;
+using Meetup_EF.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,8 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 var connectionString = builder.Configuration.GetConnectionString("EventContextConnectionString");
 builder.Services.AddDbContextPool<EventContext>(options => options.UseSqlServer(connectionString));
-//builder.Services.AddSingleton<IEventData, MockEventData>();
-builder.Services.AddScoped<IEventData, SqlEventData>();
+
+builder.Services.AddScoped<IEventData, EventDataService>();
+builder.Services.AddScoped<IGetListFromTo, GetListFromToService>();
+builder.Services.AddScoped<IGetAll, GetAllService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
